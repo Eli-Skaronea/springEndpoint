@@ -31,7 +31,7 @@ node{
 
     stage('Deploy container') {   
         echo 'Running application in container...'   
-        sh "docker run -d --name spring_endpoint-${env.BUILD_NUMBER} eskaronea/spring_endpoint"
+        sh "docker run -d -p 9000:9000 --name spring_endpoint-${env.BUILD_NUMBER} eskaronea/spring_endpoint"
     }
     
 }
