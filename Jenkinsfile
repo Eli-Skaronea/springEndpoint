@@ -32,8 +32,8 @@ node{
     stage('Deploying services') {
         echo 'Updating services on spring_stack...'
         sh 'docker stack deploy -c docker-compose.yml spring_stack'
-        sh 'xdg-open http://0.0.0.0:9000/greeting?name=User'
-        sh 'xdg-open http://0.0.0.0:8000'
+        bash 'xdg-open http://0.0.0.0:9000/greeting?name=User'
+        bash 'xdg-open http://0.0.0.0:8000'
     }
     
 }
