@@ -29,11 +29,11 @@ node{
         }
     }
 
-    stage('Deploy container') {   
-        echo 'Running application in container...'
-        sh "docker kill spring_endpoint-latest"
-        sh "docker rm spring_endpoint-latest" 
-        sh "docker run -d -p 9000:9000 --name spring_endpoint-latest eskaronea/spring_endpoint"
+    stage('Deploying services') {
+        echo 'Updating services on spring_stack...'
+        sh 'docker stack deploy -c docker-compose.yml spring_stack'
+        sh 'xdg-open http://0.0.0.0:9000/greeting?name=User'
+        sh 'xdg-open http://0.0.0.0:8000'
     }
     
 }
