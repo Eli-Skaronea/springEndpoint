@@ -31,7 +31,7 @@ node{
 
     stage('Deploy container') {   
         echo 'Running application in container...'
-        int previousBuild = ${env.BUILD_NUMBER} - 1
+        int previousBuild = "${env.BUILD_NUMBER}" - 1
         sh "docker kill spring_endpoint-" + previousBuild
         sh "docker rm spring_endpoint-" + previousBuild   
         sh "docker run -d -p 9000:9000 --name spring_endpoint-${env.BUILD_NUMBER} eskaronea/spring_endpoint"
