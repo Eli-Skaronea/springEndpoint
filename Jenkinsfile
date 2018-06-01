@@ -28,7 +28,7 @@ podTemplate(label: 'mypod', containers:
         stage('Build and test jar') 
         {
             echo 'Building jar file...'
-            gradle 'build'
+            gradle 'build --quiet'
             gradle 'clean test'
 
         }
