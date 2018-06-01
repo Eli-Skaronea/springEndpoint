@@ -79,7 +79,7 @@ podTemplate(label: 'mypod', containers:
             container('kubectl')
             {
                 echo 'Updating services on spring_stack...'
-                sh 'kubect apply -f docker-compose.yml'
+                sh 'kubectl apply -f docker-compose.yml'
             }
         }
 
