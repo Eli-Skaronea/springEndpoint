@@ -42,10 +42,11 @@ podTemplate(label: 'mypod', containers:
                 docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
                 {
                    echo 'logged in'
-                   app.push("${env.BUILD_NUMBER}")
-                   app.push("latest")
+                   sh "docker -t push eskaronea/spring_endpoint${env.BUILD_NUMBER}:latest"
+                // app.push("${env.BUILD_NUMBER}")
+                // app.push("latest")
                 }
-                //echo 'Updating services on spring_stack...'
+                echo 'Updating services on spring_stack...'
                 sh 'docker stack deploy -c docker-compose.yml spring_stack'
             }   
         }
