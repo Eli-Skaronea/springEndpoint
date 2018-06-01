@@ -10,9 +10,10 @@ public class JUnit5ExampleTest{
         System.out.println("This test method ran!");
     }
     
+    //Change this quick test to see what happens when Gradle clean test fails
     @Test
     public void failingTest(){
-        Assertions.assertEquals(3, 4);
+        Assertions.assertEquals(4, 4);
     }
 
 }
