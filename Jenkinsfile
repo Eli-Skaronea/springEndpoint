@@ -8,6 +8,7 @@ def gradle(command)
 podTemplate(label: 'mypod', containers: 
     [
     containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true)
+    containerTemplate(name: 'java', image: 'openjdk:8', command: 'cat', ttyEnabled: true)
     ],
   volumes: 
   [
@@ -28,8 +29,10 @@ podTemplate(label: 'mypod', containers:
         stage('Build and test jar') 
         {
             echo 'Building jar file...'
-            gradle 'build --quiet'
-            gradle 'clean test'
+            container('java'){
+                gradle 'build --quiet'
+                gradle 'clean test'
+            }
 
         }
 
