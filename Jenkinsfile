@@ -8,7 +8,9 @@ def gradle(command)
 podTemplate(label: 'mypod', containers: 
     [
     containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
-    containerTemplate(name: 'java', image: 'openjdk:8', command: 'cat', ttyEnabled: true)
+    containerTemplate(name: 'java', image: 'openjdk:8', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.8.8', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
     ],
   volumes: 
   [
@@ -58,6 +60,7 @@ podTemplate(label: 'mypod', containers:
                 // }
                 echo 'Updating services on spring_stack...'
                 // sh 'docker stack deploy -c docker-compose.yml spring_stack'
+                sh 'kubectl apply -f docker-compose.yml'
             }   
         }
 
@@ -71,12 +74,14 @@ podTemplate(label: 'mypod', containers:
         //     }
         // }
 
-        // stage('Deploying services') 
-        // {
-        //     echo 'Updating services on spring_stack...'
-        //     sh 'docker stack deploy -c docker-compose.yml spring_stack'
-
-        // }
+        stage('Deploying services') 
+        {
+            container(kubectl)
+            {
+                echo 'Updating services on spring_stack...'
+                sh 'kubect apply -f docker-compose.yml'
+            }
+        }
 
     }
 }
