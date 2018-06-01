@@ -18,7 +18,7 @@ podTemplate(label: 'mypod', containers:
 {
     node('mypod')
     {
-        // def app
+        def app
         stage('Checkout')
         {
             echo 'Checking out project repo...'
