@@ -26,20 +26,22 @@ podTemplate(label: 'mypod', containers:
         }
 
         stage('Build jar') 
-        {   
-           echo 'Building jar file...'
+        {
+            echo 'Building jar file...'
             gradle 'build'
         }
 
        stage('Build docker image') 
        {
-           echo 'Building docker image...'
-           container('docker')
-           {
-               app = docker.build("eskaronea/spring_endpoint")
-               //echo 'Pushing docker image to docker hub...'
-               docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
-               {
+            echo 'Building docker image...'
+            container('docker')
+            {
+                sh 'docker build -t eskaronea/spring_endpoint .'
+                //app = docker.build("eskaronea/spring_endpoint")
+                echo 'Pushing docker image to docker hub...'
+                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
+                {
+                   echo 'logged in'
                    app.push("${env.BUILD_NUMBER}")
                    app.push("latest")
                 }
