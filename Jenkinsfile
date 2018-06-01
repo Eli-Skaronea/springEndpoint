@@ -41,13 +41,19 @@ podTemplate(label: 'mypod', containers:
                 echo 'Pushing docker image to docker hub...'
                 // docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
                 // {
-                   sh 'docker login -u eskaronea -p D0ckerPass'
-                   sh "docker push eskaronea/spring_endpoint"
+                withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                credentialsId: 'docker-hub-credentials',
+                usernameVariable: 'DOCKER_HUB_USER',
+                passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+                sh """
+                docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
+                "docker push eskaronea/spring_endpoint"
+                """
                 // app.push("${env.BUILD_NUMBER}")
                 // app.push("latest")
                 // }
                 echo 'Updating services on spring_stack...'
-                sh 'docker stack deploy -c docker-compose.yml spring_stack'
+                // sh 'docker stack deploy -c docker-compose.yml spring_stack'
             }   
         }
 
