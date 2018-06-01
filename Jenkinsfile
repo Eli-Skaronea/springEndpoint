@@ -25,10 +25,12 @@ podTemplate(label: 'mypod', containers:
             checkout scm    
         }
 
-        stage('Build jar') 
+        stage('Build and test jar') 
         {
             echo 'Building jar file...'
-            gradle 'build'
+            gradle 'build --quiet'
+            gradle 'clean test'
+
         }
 
        stage('Build docker image') 
