@@ -1,4 +1,5 @@
 FROM openjdk:8-jdk-alpine
+USER root
 
 COPY /build/libs/gs-rest-service-0.1.0.jar /app.jar
 
