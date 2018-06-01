@@ -45,11 +45,9 @@ podTemplate(label: 'mypod', containers:
                 credentialsId: 'docker-hub-credentials',
                 usernameVariable: 'DOCKER_HUB_USER',
                 passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
-                sh """
-                docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
-                "docker push eskaronea/spring_endpoint"
-                """
+                sh "docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}"
                 }
+                sh "docker push eskaronea/spring_endpoint"
                 // app.push("${env.BUILD_NUMBER}")
                 // app.push("latest")
                 // }
