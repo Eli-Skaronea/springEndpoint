@@ -41,7 +41,7 @@ podTemplate(label: 'mypod', containers:
                 echo 'Pushing docker image to docker hub...'
                 docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
                 {
-                   echo 'logged in'
+                   docker login
                    sh "docker push eskaronea/spring_endpoint"
                 // app.push("${env.BUILD_NUMBER}")
                 // app.push("latest")
