@@ -39,13 +39,13 @@ podTemplate(label: 'mypod', containers:
                 sh "docker build -t eskaronea/spring_endpoint:${env.BUILD_NUMBER} ."
                 //app = docker.build("eskaronea/spring_endpoint")
                 echo 'Pushing docker image to docker hub...'
-                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
-                {
-                   sh 'docker login docker-hub-credentials'
+                // docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
+                // {
+                   bash 'docker login docker-hub-credentials'
                    sh "docker push eskaronea/spring_endpoint"
                 // app.push("${env.BUILD_NUMBER}")
                 // app.push("latest")
-                }
+                // }
                 echo 'Updating services on spring_stack...'
                 sh 'docker stack deploy -c docker-compose.yml spring_stack'
             }   
