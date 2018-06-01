@@ -76,7 +76,7 @@ podTemplate(label: 'mypod', containers:
 
         stage('Deploying services') 
         {
-            container(kubectl)
+            container('kubectl')
             {
                 echo 'Updating services on spring_stack...'
                 sh 'kubect apply -f docker-compose.yml'
