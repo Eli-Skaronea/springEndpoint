@@ -7,7 +7,7 @@ def gradle(command)
 
 podTemplate(label: 'mypod', containers: 
     [
-    containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true)
+    containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'java', image: 'openjdk:8', command: 'cat', ttyEnabled: true)
     ],
   volumes: 
