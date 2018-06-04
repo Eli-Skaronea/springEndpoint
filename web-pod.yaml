@@ -12,7 +12,7 @@ spec:
 status:
   loadBalancer: {}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1beta2
 kind: Deployment
 metadata:
   name: spring-boot-deployment
@@ -21,6 +21,8 @@ spec:
     matchLabels: 
       app: spring-boot-app
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -32,3 +34,11 @@ spec:
         ports:
          - containerPort: 8080
 status: {}
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-resources
+spec:
+  hard:
+    limits.cpu: "400m"

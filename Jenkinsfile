@@ -32,8 +32,8 @@ podTemplate(label: 'mypod', containers:
         {
             echo 'Building jar file...'
             container('java'){
-                gradle 'build'
-                //gradle 'clean test'
+                gradle 'assemble --quiet'
+                gradle 'clean test'
             }
 
         }
@@ -44,36 +44,19 @@ podTemplate(label: 'mypod', containers:
             container('docker')
             {
                 sh "docker build -t eskaronea/spring_endpoint:${env.BUILD_NUMBER} ."
-                //app = docker.build("eskaronea/spring_endpoint")
+        
                 echo 'Pushing docker image to docker hub...'
-                // docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
-                // {
+               
                 withCredentials([[$class: 'UsernamePasswordMultiBinding',
                 credentialsId: 'docker-hub-credentials',
                 usernameVariable: 'DOCKER_HUB_USER',
                 passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
                 sh "docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}"
                 }
-                sh "docker push eskaronea/spring_endpoint:${env.BUILD_NUMBER}"
+                sh "docker push eskaronea/spring_endpoint:v1.0.${env.BUILD_NUMBER}"
                 sh "docker push eskaronea/spring_endpoint:latest"
-                // app.push("${env.BUILD_NUMBER}")
-                // app.push("latest")
-                // }
-                // echo 'Updating services on spring_stack...'
-                // sh 'docker stack deploy -c docker-compose.yml spring_stack'
-                // sh "kubectl apply -f docker-compose.yml"
             }   
         }
-
-        // stage('Push docker image') 
-        // {
-        //     echo 'Pushing docker image to docker hub...'
-        //     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
-        //     {
-        //         app.push("${env.BUILD_NUMBER}")
-        //        app.push("latest")
-        //     }
-        // }
 
         stage('Deploying services') 
         {
