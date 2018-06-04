@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  containers:
+  - image: eskaronea/spring_endpoint:latest
+    name: web
+    ports:
+    - containerPort: 9000
+    resources: {}
+  restartPolicy: OnFailure
+status: {}
