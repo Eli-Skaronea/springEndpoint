@@ -43,7 +43,7 @@ podTemplate(label: 'mypod', containers:
             echo 'Building docker image...'
             container('docker')
             {
-                sh "docker build -t eskaronea/spring_endpoint:${env.BUILD_NUMBER} ."
+                sh "docker build -t eskaronea/spring_endpoint:v1.0.${env.BUILD_NUMBER} ."
         
                 echo 'Pushing docker image to docker hub...'
                
