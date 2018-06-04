@@ -66,7 +66,7 @@ podTemplate(label: 'mypod', containers:
                 sh "kubectl apply -f web-pod.yaml"
             }
         }
-        //Test comment
+        //Test commen
 
     }
 }
