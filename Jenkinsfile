@@ -58,9 +58,9 @@ podTemplate(label: 'mypod', containers:
                 // app.push("${env.BUILD_NUMBER}")
                 // app.push("latest")
                 // }
-                echo 'Updating services on spring_stack...'
+                // echo 'Updating services on spring_stack...'
                 // sh 'docker stack deploy -c docker-compose.yml spring_stack'
-                sh 'kubectl apply -f docker-compose.yml'
+                // sh "kubectl apply -f docker-compose.yml"
             }   
         }
 
@@ -79,7 +79,7 @@ podTemplate(label: 'mypod', containers:
             container('kubectl')
             {
                 echo 'Updating services on spring_stack...'
-                sh 'kubectl apply -f docker-compose.yml'
+                sh "kubectl apply -f docker-compose.yml"
             }
         }
 
