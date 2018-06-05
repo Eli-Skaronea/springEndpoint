@@ -86,19 +86,19 @@ podTemplate(label: 'mypod', containers:
             }
         }
 
-        // stage('Push helm package')
-        // {
-        //     echo 'Pushing helm package to repo...'
-        //     withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
-        //     {
-        //         sh "git checkout master"
-        //         sh "git config user.name 'eli-skaronea'"
-        //         sh "git config user.email 'eli.skaronea@gmail.com'"
-        //         sh "git add docs/"
-        //         sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
-        //         sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/repo.git"
-        //     }
-        // }
+        stage('Push helm package')
+        {
+            echo 'Pushing helm package to repo...'
+            withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
+            {
+                sh "git checkout master"
+                sh "git config user.name 'eli-skaronea'"
+                sh "git config user.email 'eli.skaronea@gmail.com'"
+                sh "git add docs/"
+                sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
+                sh "git push -u origin master"
+            }
+        }
 
         // stage('Deploy helm package')
         // {
