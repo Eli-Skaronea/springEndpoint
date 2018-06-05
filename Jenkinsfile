@@ -62,6 +62,8 @@ podTemplate(label: 'mypod', containers:
         {
             container('helm')
             {
+                echo 'Initialize helm'
+                sh "helm init"
                 
                 echo 'Linting helm package...'
                 sh "helm lint spring-chart/"
