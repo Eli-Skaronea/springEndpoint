@@ -89,12 +89,14 @@ podTemplate(label: 'mypod', containers:
         stage('Push helm package')
         {
             echo 'Pushing helm package to repo...'
-            
-            sh "git checkout master"
-            sh "git add docs/"
-            sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
-            sh "git push -u origin master"
-            
+            withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
+            {
+                sh "git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/springEndpoint.git"
+                sh "git checkout master"
+                sh "git add docs/"
+                sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
+                sh "git push -u origin master"
+            }
         }
 
         // stage('Deploy helm package')
