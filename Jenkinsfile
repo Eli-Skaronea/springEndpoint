@@ -58,7 +58,7 @@ podTemplate(label: 'mypod', containers:
             }   
         }
 
-        stage('Deploying services') 
+        stage('Building helm') 
         {
             container('helm')
             {
@@ -66,8 +66,18 @@ podTemplate(label: 'mypod', containers:
                 echo 'Linting helm package...'
                 sh "helm lint spring-chart/"
 
-                echo 'Updating services in helm package...'
-                sh "helm upgrade --install spring spring-chart/ --set ImageTag=v1.0.${env.BUILD_NUMBER}"
+                echo 'Packaging helm chart...'
+                sh "helm package spring-chart/ --version 1.0.${env.BUILD_NUMBER}"
+                sh "mv spring-chart-1.0.${env.BUILD_NUMBER}.tgz docs"
+                sh "helm repo index docs --url https://eli-skaronea.github.io/springEndpoint/"
+
+                echo 'Pushing helm package to repo...'
+                withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
+                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git --tags')
+}
+                // echo 'Updating services in helm package...'
+                // sh "helm upgrade --install spring spring-chart/ --set ImageTag=v1.0.${env.BUILD_NUMBER}"
 
             }
         }
