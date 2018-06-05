@@ -88,7 +88,8 @@ podTemplate(label: 'mypod', containers:
 
         stage('Push helm package')
         {
-            
+            sh "git remote set-url origin git@github.com:Eli-Skaronea/springEndpoint.git"
+            sh "git remote -v"
             sh "git checkout master"
             sh "git config user.name 'eli-skaronea'"
             sh "git config user.email 'eli.skaronea@gmail.com'"
