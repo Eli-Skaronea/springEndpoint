@@ -60,10 +60,15 @@ podTemplate(label: 'mypod', containers:
 
         stage('Deploying services') 
         {
-            container('kubectl')
+            container('helm')
             {
-                echo 'Updating services on spring_stack...'
-                sh "kubectl apply -f web-pod.yaml"
+                
+                echo 'Linting helm package...'
+                sh "helm lint spring-chart/"
+
+                echo 'Updating services in helm package...'
+                sh "helm upgrade --install spring spring-chart/ --set ImageTag=v1.0.${env.BUILD_NUMBER}"
+
             }
         }
         //Test commen
