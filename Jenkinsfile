@@ -91,7 +91,8 @@ podTemplate(label: 'mypod', containers:
             echo 'Pushing helm package to repo...'
             withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
             {
-                sh "git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/springEndpoint.git"
+                sh "git origin -v"
+                sh "git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/springEndpoint.git"
                 sh "git checkout master"
                 sh "git add docs/"
                 sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
