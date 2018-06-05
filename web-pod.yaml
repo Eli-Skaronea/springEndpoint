@@ -21,8 +21,6 @@ spec:
     matchLabels: 
       app: spring-boot-app
   replicas: 1
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
