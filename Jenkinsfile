@@ -96,7 +96,7 @@ podTemplate(label: 'mypod', containers:
                 sh "git config user.email 'eli.skaronea@gmail.com'"
                 sh "git add docs/"
                 sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
-                sh "git push"
+                sh "git push -u origin master"
             }
         }
         //Test commen
