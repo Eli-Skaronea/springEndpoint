@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: spring-boot-deployment
+spec:
+  selector:
+    matchLabels: 
+      app: spring-boot-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spring-boot-app
+    spec:
+      containers:
+      - image: eskaronea/spring_endpoint:latest
+        name: greeting-endpoint
+        ports:
+         - containerPort: 8080
+status: {}

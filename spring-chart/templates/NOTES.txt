@@ -1,0 +1,4 @@
+1. Get the application URL by running these commands:
+	- minikube service list
+2. Append /greeting to end of URL to access endpoint.
+3. Append /greeting?name=<insert name here> to change greeting.

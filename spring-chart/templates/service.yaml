@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeting-endpoint
+spec:
+  ports:
+  - port: 9000
+    targetPort: 9000
+  selector:
+    app: spring-boot-app
+  type: LoadBalancer
+status:
+  loadBalancer: {}
