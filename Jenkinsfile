@@ -31,7 +31,8 @@ podTemplate(label: 'mypod', containers:
         stage('Build and test jar') 
         {
             echo 'Building jar file...'
-            container('java'){
+            container('java')
+            {
                 gradle 'build --quiet'
                 //gradle 'clean test'
             }
@@ -50,8 +51,9 @@ podTemplate(label: 'mypod', containers:
                 withCredentials([[$class: 'UsernamePasswordMultiBinding',
                 credentialsId: 'docker-hub-credentials',
                 usernameVariable: 'DOCKER_HUB_USER',
-                passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
-                sh "docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}"
+                passwordVariable: 'DOCKER_HUB_PASSWORD']]) 
+                {
+                    sh "docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}"
                 }
                 sh "docker push eskaronea/spring_endpoint:v1.0.${env.BUILD_NUMBER}"
                 sh "docker push eskaronea/spring_endpoint:latest"
@@ -64,7 +66,7 @@ podTemplate(label: 'mypod', containers:
             {
                 echo 'Initialize helm'
                 sh "helm init"
-                
+
                 echo 'Linting helm package...'
                 sh "helm lint spring-chart/"
 
@@ -72,14 +74,25 @@ podTemplate(label: 'mypod', containers:
                 sh "helm package spring-chart/ --version 1.0.${env.BUILD_NUMBER} -d docs/"
                 sh "helm repo index docs --url https://eli-skaronea.github.io/springEndpoint/"
 
-                echo 'Pushing helm package to repo...'
-                withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
-                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git --tags')
-}
+                // echo 'Pushing helm package to repo...'
+                // withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
+                // {
+                //     sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
+                //     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git --tags')
+                // }
                 // echo 'Updating services in helm package...'
                 // sh "helm upgrade --install spring spring-chart/ --set ImageTag=v1.0.${env.BUILD_NUMBER}"
 
+            }
+        }
+
+        stage('Push helm package')
+        {
+            echo 'Pushing helm package to repo...'
+            withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
+            {
+                sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
+                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git --tags')
             }
         }
         //Test commen
