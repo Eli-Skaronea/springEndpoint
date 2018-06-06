@@ -97,6 +97,7 @@ podTemplate(label: 'mypod', containers:
         //     sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
         //     sh "git push origin master"
         // }
+            step([$class: 'WsCleanup']) 
             sshagent (credentials: ['git-ssh']) 
             {
                 // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
