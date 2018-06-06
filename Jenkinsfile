@@ -90,6 +90,7 @@ podTemplate(label: 'mypod', containers:
                     sh "git config user.name 'eli-skaronea'"
                     sh "git config user.email 'eli.skaronea@gmail.com'"
                     sh "git commit -am 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'"
+                    sh "git pull helm-repo"
                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git')
                 }
             
