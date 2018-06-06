@@ -89,6 +89,11 @@ podTemplate(label: 'mypod', containers:
 
         stage('Push helm package')
         {
+            withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
+                {
+                    sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git --tags')
+                }
             
         //     sh "git checkout master"
         //     sh "git config user.name 'eli-skaronea'"
@@ -98,13 +103,13 @@ podTemplate(label: 'mypod', containers:
         //     sh "git push origin master"
         // }
         
-            sshagent (credentials: ['git-ssh']) 
-            {
-                // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
-                sh("git add docs/")
-                sh("git commit -m 'Jenkins push'")
-                sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
-            }
+            // sshagent (credentials: ['git-ssh']) 
+            // {
+            //     // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
+            //     sh("git add docs/")
+            //     sh("git commit -m 'Jenkins push'")
+            //     sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
+            // }
         }
 
     }
