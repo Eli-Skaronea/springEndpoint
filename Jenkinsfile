@@ -71,9 +71,9 @@ podTemplate(label: 'mypod', containers:
                 sh "helm lint spring-chart/"
 
                 echo 'Packaging helm chart...'
-                sh "helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d helm-charts/docs/"
-                sh "helm package spring-chart/ --version 1.0-latest -d helm-charts/docs/"
-                sh "helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/"
+                sh "helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d helm-deployment/docs/"
+                sh "helm package spring-chart/ --version 1.0-latest -d helm-deployment/docs/"
+                sh "helm repo index helm-deployment/docs --url https://eli-skaronea.github.io/helm-charts/"
 
 
             }
