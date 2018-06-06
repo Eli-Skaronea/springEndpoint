@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="JUnit5ExampleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-04T17:37:07" hostname="bodhiudevl01.udev.six3" time="0.007">
+<testsuite name="JUnit5ExampleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-06T15:15:07" hostname="jenkins-slave-pbp9c-3lgg4" time="0.011">
   <properties/>
-  <testcase name="justAnExample()" classname="JUnit5ExampleTest" time="0.007"/>
+  <testcase name="justAnExample()" classname="JUnit5ExampleTest" time="0.011"/>
   <system-out><![CDATA[This test method ran!
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
