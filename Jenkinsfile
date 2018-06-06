@@ -89,14 +89,13 @@ podTemplate(label: 'mypod', containers:
 
         stage('Push helm package')
         {
-            gitLib.pushSSH(commitMsg: "Jenkins build #${env.BUILD_NUMBER} from ${env.BRANCH_NAME}", 
-                tagName: "build/${env.BRANCH_NAME}/${env.BUILD_NUMBER}", files: ".", config: true);
-            // sh "git checkout master"
-            // sh "git config user.name 'eli-skaronea'"
-            // sh "git config user.email 'eli.skaronea@gmail.com'"
-            // sh "git add docs/"
-            // sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
-            // sh "git push origin master"
+            
+            sh "git checkout master"
+            sh "git config user.name 'eli-skaronea'"
+            sh "git config user.email 'eli.skaronea@gmail.com'"
+            sh "git add docs/"
+            sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
+            sh "git push origin master"
         }
 
         // stage('Deploy helm package')
