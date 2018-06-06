@@ -107,7 +107,7 @@ podTemplate(label: 'mypod', containers:
     // This step utilizes the Workspace Cleanup Plugin: https://wiki.jenkins.io/display/JENKINS/Workspace+Cleanup+Plugin
         step([$class: 'WsCleanup'])  
 
-        sshagent (credentials: ['credentialsId: 'git-ssh'']) 
+        sshagent (credentials: [credentialsId: 'git-ssh']) 
         {
             // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
             sh("git add docs/")
