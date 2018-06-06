@@ -27,8 +27,8 @@ podTemplate(label: 'mypod', containers:
             echo 'Checking out project repo...'
             checkout scm
             sh "git clone https://github.com/eli-skaronea/helm-charts.git"
-            sh "git remote rename origin upstream"
-            sh "git remote add origin https://github.com/eli-skaronea/helm-charts.git"
+            //sh "git remote rename origin upstream"
+            sh "git remote add helm-repo https://github.com/eli-skaronea/helm-charts.git"
 
         }
 
@@ -93,8 +93,8 @@ podTemplate(label: 'mypod', containers:
                     sh "cd helm-charts"
                     sh "git add ."
                     sh "git commit -m 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'"
-                    // sh "git pull origin master --rebase"
-                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git'
+                    //sh "git pull origin master --rebase"
+                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git master'
                 }
             
         }
