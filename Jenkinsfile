@@ -25,7 +25,8 @@ podTemplate(label: 'mypod', containers:
         stage('Checkout')
         {
             echo 'Checking out project repo...'
-            checkout scm    
+            checkout scm
+            gitLib = load "git_push_ssh.groovy"    
         }
 
         stage('Build and test jar') 
@@ -88,18 +89,8 @@ podTemplate(label: 'mypod', containers:
 
         stage('Push helm package')
         {
-            withCredentials([[$class  : 'FileBinding', credentialsId: 'git-credentials',
-                                variable: 'CREDENTIALS']]) 
-            {
-                sh 'git config --local credential.username Eli-Skaronea'
-                sh "git config --local credential.helper 'store --file=${env.CREDENTIALS}'"
-
-                sh "git add docs/"
-                sh "git commit -m 'Jenkins pushed spring-boot'"
-                sh "git push"
-
-                sh 'git config --local --remove-section credential'
-            }
+            gitLib.pushSSH(commitMsg: "Jenkins build #${env.BUILD_NUMBER} from ${env.BRANCH_NAME}", 
+                tagName: "build/${env.BRANCH_NAME}/${env.BUILD_NUMBER}", files: ".", config: true);
             // sh "git checkout master"
             // sh "git config user.name 'eli-skaronea'"
             // sh "git config user.email 'eli.skaronea@gmail.com'"
