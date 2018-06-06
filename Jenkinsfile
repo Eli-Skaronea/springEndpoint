@@ -26,7 +26,6 @@ podTemplate(label: 'mypod', containers:
         {
             echo 'Checking out project repo...'
             checkout scm
-            gitLib = load "git_push_ssh.groovy"    
         }
 
         stage('Build and test jar') 
@@ -34,7 +33,7 @@ podTemplate(label: 'mypod', containers:
             echo 'Building jar file...'
             container('java')
             {
-                gradle 'build --quiet'
+                gradle 'build'
                 //gradle 'clean test'
             }
 
