@@ -87,8 +87,8 @@ podTemplate(label: 'mypod', containers:
             }
         }
 
-        // stage('Push helm package')
-        // {
+        stage('Push helm package')
+        {
             
         //     sh "git checkout master"
         //     sh "git config user.name 'eli-skaronea'"
@@ -97,13 +97,14 @@ podTemplate(label: 'mypod', containers:
         //     sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
         //     sh "git push origin master"
         // }
-
-        // stage('Deploy helm package')
-        // {
-        //     echo 'Updating services in helm deployment...'
-        //     sh "helm upgrade --install spring spring-chart/ --set ImageTag=v1.0.${env.BUILD_NUMBER}"
-        // }
-        //Test commen
+            sshagent (credentials: ['git-ssh']) 
+            {
+                // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
+                sh("git add docs/")
+                sh("git commit -m 'Jenkins push'")
+                sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
+            }
+        }
 
     }
 
@@ -113,15 +114,15 @@ podTemplate(label: 'mypod', containers:
     //     step([$class: 'WsCleanup'])  
     // }
 
-    node 
-    {
-    sshagent (credentials: ['git-ssh']) 
-        {
-            // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
-            sh("git add docs/")
-            sh("git commit -m 'Jenkins push'")
-            sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
-        }
-    }   
+    // node 
+    // {
+    // sshagent (credentials: ['git-ssh']) 
+    //     {
+    //         // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
+    //         sh("git add docs/")
+    //         sh("git commit -m 'Jenkins push'")
+    //         sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
+    //     }
+    // }   
     
 }
