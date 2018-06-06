@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  spring-chart:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2018-06-06T13:29:36.703424175-06:00
+    description: A Helm chart for Kubernetes - creates a simple REST endpoint
+    digest: 9e2ce157d6e013ad6a17f144a2b94a81fc7e7e9e44b0b7ae0485d71c6a2adca5
+    name: spring-chart
+    urls:
+    - https://eli-skaronea.github.io/helm-charts/spring-chart-1.1.tgz
+    version: "1.1"
+generated: 2018-06-06T13:29:36.703103934-06:00
