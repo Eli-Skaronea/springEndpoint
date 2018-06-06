@@ -72,17 +72,10 @@ podTemplate(label: 'mypod', containers:
                 sh "helm lint spring-chart/"
 
                 echo 'Packaging helm chart...'
-                sh "helm package spring-chart/ --version 1.0.${env.BUILD_NUMBER} -d docs/"
-                sh "helm repo index docs --url https://eli-skaronea.github.io/springEndpoint/"
+                sh "helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d helm-charts/docs/"
+                sh "helm package spring-chart/ --version 1.0-latest -d helm-charts/docs/"
+                sh "helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/"
 
-                // echo 'Pushing helm package to repo...'
-                // withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
-                // {
-                //     sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
-                //     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git --tags')
-                // }
-                // echo 'Updating services in helm package...'
-                // sh "helm upgrade --install spring spring-chart/ --set ImageTag=v1.0.${env.BUILD_NUMBER}"
 
             }
         }
@@ -92,46 +85,16 @@ podTemplate(label: 'mypod', containers:
             withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
                 {
                     //sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
+                    sh "git remote set-url https://github.com/eli-skaronea/helm-charts.git"
                     sh "git config user.name 'eli-skaronea'"
                     sh "git config user.email 'eli.skaronea@gmail.com'"
-                    sh "git commit -am 'jenkins pushed a commit'"
-                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git')
+                    sh "git commit -am 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and set to tag-latest'"
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git')
                 }
             
-        //     sh "git checkout master"
-        //     sh "git config user.name 'eli-skaronea'"
-        //     sh "git config user.email 'eli.skaronea@gmail.com'"
-        //     sh "git add docs/"
-        //     sh "git commit -m 'Jenkins pushed spring-boot-1.0.${env.BUILD_NUMBER}'"
-        //     sh "git push origin master"
-        // }
-        
-            // sshagent (credentials: ['git-ssh']) 
-            // {
-            //     // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
-            //     sh("git add docs/")
-            //     sh("git commit -m 'Jenkins push'")
-            //     sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
-            // }
         }
 
     }
 
-    // node 
-    // {
-    //     // This step utilizes the Workspace Cleanup Plugin: https://wiki.jenkins.io/display/JENKINS/Workspace+Cleanup+Plugin
-    //     step([$class: 'WsCleanup'])  
-    // }
-
-    // node 
-    // {
-    // sshagent (credentials: ['git-ssh']) 
-    //     {
-    //         // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
-    //         sh("git add docs/")
-    //         sh("git commit -m 'Jenkins push'")
-    //         sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
-    //     }
-    // }   
     
 }
