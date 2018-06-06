@@ -91,8 +91,11 @@ podTemplate(label: 'mypod', containers:
         {
             withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
                 {
-                    sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
-                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git --tags')
+                    //sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
+                    sh "git config user.name 'eli-skaronea'"
+                    sh "git config user.email 'eli.skaronea@gmail.com'"
+                    sh "git commit -am 'jenkins pushed a commit'"
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git')
                 }
             
         //     sh "git checkout master"
