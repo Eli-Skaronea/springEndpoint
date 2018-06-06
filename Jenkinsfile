@@ -104,24 +104,18 @@ podTemplate(label: 'mypod', containers:
         //     sh "helm upgrade --install spring spring-chart/ --set ImageTag=v1.0.${env.BUILD_NUMBER}"
         // }
         //Test commen
-
-    }
-
-    node 
-    {
-        // This step utilizes the Workspace Cleanup Plugin: https://wiki.jenkins.io/display/JENKINS/Workspace+Cleanup+Plugin
+    // This step utilizes the Workspace Cleanup Plugin: https://wiki.jenkins.io/display/JENKINS/Workspace+Cleanup+Plugin
         step([$class: 'WsCleanup'])  
-    }
 
-    node 
-    {
-    sshagent (credentials: ['credentialsId: 'git-ssh'']) 
+        sshagent (credentials: ['credentialsId: 'git-ssh'']) 
         {
             // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
             sh("git add docs/")
             sh("git commit -m 'Jenkins push'")
             sh('git push git@github.com:eli-skaronea/springEndpoint.git)')
         }
-    }   
     
+
+    }
+
 }
