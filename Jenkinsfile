@@ -28,7 +28,7 @@ podTemplate(label: 'mypod', containers:
             checkout scm
             //sh "mkdir tmp"
             //sh "ls"
-            sh "git clone https://github.com/eli-skaronea/helm-charts.git /tmp"
+            sh "git clone https://github.com/eli-skaronea/helm-charts.git"
             //sh "ls"
             //sh "git remote rename origin upstream"
             //sh "git remote add helm-repo https://github.com/eli-skaronea/helm-charts.git"
