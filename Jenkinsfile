@@ -103,7 +103,7 @@ podTemplate(label: 'mypod', containers:
                         git add helm-charts/docs
                         git commit -m 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'
                         git show-ref
-                        git push -u helm-repo origin/master
+                        git push -u helm-repo remotes/origin/master
                        """
                        //git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git HEAD:master
                 }
