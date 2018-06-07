@@ -95,7 +95,7 @@ podTemplate(label: 'mypod', containers:
                         git config user.email 'eli.skaronea@gmail.com'
                         git add .
                         git commit -m 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'
-                        
+                        git pull origin master
                         git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git HEAD:master
                        """
                 }
