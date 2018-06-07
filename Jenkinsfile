@@ -93,7 +93,7 @@ podTemplate(label: 'mypod', containers:
                     sh "git add ."
                     sh "git commit -m 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'"
                     //sh "git pull origin master --rebase"
-                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git'
+                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git HEAD:master'
                 }
             
         }
