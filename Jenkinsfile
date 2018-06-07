@@ -26,7 +26,10 @@ podTemplate(label: 'mypod', containers:
         {
             echo 'Checking out project repo...'
             checkout scm
+            sh "mkdir tmp"
+            sh "cd tmp"
             sh "git clone https://github.com/eli-skaronea/helm-charts.git"
+            sh "cd .."
             //sh "git remote rename origin upstream"
             //sh "git remote add helm-repo https://github.com/eli-skaronea/helm-charts.git"
 
@@ -76,9 +79,9 @@ podTemplate(label: 'mypod', containers:
 
                 echo 'Packaging helm chart...'
                 sh """
-                    helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d helm-charts/docs/
-                    helm package spring-chart/ --version 1.0-latest -d helm-charts/docs/
-                    helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/
+                    helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d tmp/helm-charts/docs/
+                    helm package spring-chart/ --version 1.0-latest -d tmp/helm-charts/docs/
+                    helm repo index tmp/helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/
                    """ 
 
 
@@ -87,13 +90,12 @@ podTemplate(label: 'mypod', containers:
 
         stage('Push helm package')
         {
-            sh "ls"
-            sh "cd .."
-            sh "ls"
-            sh "pwd"
-            sh "cp -R /home/jenkins/workspace/Build-Pipeline/helm-charts /home/jenkins/workspace/Build-Pipeline/tmp"
             sh "cd tmp"
-            sh "git clone https://github.com/eli-skaronea/helm-charts.git"
+            // sh "ls"
+            // sh "pwd"
+            // sh "cp -R /home/jenkins/workspace/Build-Pipeline/helm-charts /home/jenkins/workspace/Build-Pipeline/tmp"
+            // sh "cd tmp"
+            // sh "git clone https://github.com/eli-skaronea/helm-charts.git"
             withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
                 {
                     //sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
