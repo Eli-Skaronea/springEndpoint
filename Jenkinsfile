@@ -75,9 +75,11 @@ podTemplate(label: 'mypod', containers:
                 sh "helm lint spring-chart/"
 
                 echo 'Packaging helm chart...'
-                sh "helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d helm-charts/docs/"
-                sh "helm package spring-chart/ --version 1.0-latest -d helm-charts/docs/"
-                sh "helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/"
+                sh """
+                    helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d helm-charts/docs/
+                    helm package spring-chart/ --version 1.0-latest -d helm-charts/docs/
+                    helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/
+                   """ 
 
 
             }
@@ -88,12 +90,14 @@ podTemplate(label: 'mypod', containers:
             withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
                 {
                     //sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
-                    sh "git config user.name 'eli-skaronea'"
-                    sh "git config user.email 'eli.skaronea@gmail.com'"
-                    sh "git add ."
-                    sh "git commit -m 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'"
-                    //sh "git pull origin master --rebase"
-                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git HEAD:master'
+                    sh """
+                        git config user.name 'eli-skaronea'
+                        git config user.email 'eli.skaronea@gmail.com'
+                        git add .
+                        git commit -m 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'
+                        
+                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/springEndpoint.git HEAD:master
+                       """
                 }
             
         }
