@@ -81,34 +81,37 @@ podTemplate(label: 'mypod', containers:
                     helm package spring-chart/ --version 1.0-latest -d helm-charts/docs/
                     helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/
                    """ 
+                archiveArtifacts 'helm-charts/docs/index.yaml'
+                archiveArtifacts 'helm-charts/docs/spring-chart-v1.0-${env.BUILD_NUMBER}'
+                archiveArtifacts 'helm-charts/docs/spring-chart-v1.0-latest'
 
 
             }
         }
 
-        stage('Push helm package')
-        {
+        // stage('Push helm package')
+        // {
             
-            // sh "ls"
-            // sh "pwd"
-            // sh "cp -R /home/jenkins/workspace/Build-Pipeline/helm-charts /home/jenkins/workspace/Build-Pipeline/tmp"
-            // sh "cd tmp"
-            // sh "git clone https://github.com/eli-skaronea/helm-charts.git"
-            withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
-                {
-                    //sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
-                    sh """
-                        git config user.name 'eli-skaronea'
-                        git config user.email 'eli.skaronea@gmail.com'
-                        git add helm-charts/docs
-                        git commit -m 'Jenkins has packaged and pushed spring-chart-v1.1-${env.BUILD_NUMBER} and latest'
-                        git show-ref
-                        git push -u helm-repo remotes/origin/master
-                       """
-                       //git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git HEAD:master
-                }
+        //     // sh "ls"
+        //     // sh "pwd"
+        //     // sh "cp -R /home/jenkins/workspace/Build-Pipeline/helm-charts /home/jenkins/workspace/Build-Pipeline/tmp"
+        //     // sh "cd tmp"
+        //     // sh "git clone https://github.com/eli-skaronea/helm-charts.git"
+        //     withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
+        //         {
+        //             //sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
+        //             sh """
+        //                 git config user.name 'eli-skaronea'
+        //                 git config user.email 'eli.skaronea@gmail.com'
+        //                 git add helm-charts/docs
+        //                 git commit -m 'Jenkins has packaged and pushed spring-chart-v1.-${env.BUILD_NUMBER} and latest'
+        //                 git show-ref
+        //                 git push -u helm-repo remotes/origin/master
+        //                """
+        //                //git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git HEAD:master
+        //         }
             
-        }
+        // }
 
     }
 
