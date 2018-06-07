@@ -87,10 +87,11 @@ podTemplate(label: 'mypod', containers:
 
         stage('Push helm package')
         {
+            sh "ls"
             sh "cd .."
             sh "ls"
             sh "pwd"
-            sh "cp -R /home/jenkins/workspace/Build-Pipeline/springEndpoint /home/jenkins/workspace/Build-Pipeline/tmp"
+            sh "cp -R /home/jenkins/workspace/Build-Pipeline/helm-charts /home/jenkins/workspace/Build-Pipeline/tmp"
             sh "cd tmp"
             sh "git clone https://github.com/eli-skaronea/helm-charts.git"
             withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
