@@ -82,7 +82,7 @@ podTemplate(label: 'mypod', containers:
                     helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/
                    """ 
                 archiveArtifacts 'helm-charts/docs/index.yaml'
-                archiveArtifacts 'helm-charts/docs/spring-chart-1.0-${env.BUILD_NUMBER}'
+                archiveArtifacts "helm-charts/docs/spring-chart-1.0-${env.BUILD_NUMBER}"
                 archiveArtifacts 'helm-charts/docs/spring-chart-1.0-latest'
 
 
