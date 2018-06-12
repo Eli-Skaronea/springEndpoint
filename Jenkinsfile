@@ -26,6 +26,7 @@ podTemplate(label: 'mypod', containers:
         {
             echo 'Checking out project repo...'
             checkout scm
+            sh "git clone https://github.com/eli-skaronea/helm-charts.git"
         }
 
         stage('Build and test jar') 
