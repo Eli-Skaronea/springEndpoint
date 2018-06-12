@@ -26,11 +26,6 @@ podTemplate(label: 'mypod', containers:
         {
             echo 'Checking out project repo...'
             checkout scm
-            sh "git clone https://github.com/eli-skaronea/helm-charts.git"
-            sh "git remote add helm-repo https://github.com/eli-skaronea/helm-charts.git"
-            //sh "git remote rename origin upstream"
-            //sh "git remote add helm-repo https://github.com/eli-skaronea/helm-charts.git"
-
         }
 
         stage('Build and test jar') 
@@ -89,29 +84,6 @@ podTemplate(label: 'mypod', containers:
             }
         }
 
-        // stage('Push helm package')
-        // {
-            
-        //     // sh "ls"
-        //     // sh "pwd"
-        //     // sh "cp -R /home/jenkins/workspace/Build-Pipeline/helm-charts /home/jenkins/workspace/Build-Pipeline/tmp"
-        //     // sh "cd tmp"
-        //     // sh "git clone https://github.com/eli-skaronea/helm-charts.git"
-        //     withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) 
-        //         {
-        //             //sh("git tag -a v1.0.${env.BUILD_NUMBER} -m 'Jenkins pushed helm package v1.0.${env.BUILD_NUMBER}'")
-        //             sh """
-        //                 git config user.name 'eli-skaronea'
-        //                 git config user.email 'eli.skaronea@gmail.com'
-        //                 git add helm-charts/docs
-        //                 git commit -m 'Jenkins has packaged and pushed spring-chart-v1.-${env.BUILD_NUMBER} and latest'
-        //                 git show-ref
-        //                 git push -u helm-repo remotes/origin/master
-        //                """
-        //                //git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eli-skaronea/helm-charts.git HEAD:master
-        //         }
-            
-        // }
 
     }
 
