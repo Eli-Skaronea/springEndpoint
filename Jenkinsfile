@@ -34,8 +34,8 @@ podTemplate(label: 'mypod', containers:
             echo 'Building jar file...'
             container('java')
             {
+                gradle 'clean test'
                 gradle 'build'
-                //gradle 'clean test'
             }
 
         }
