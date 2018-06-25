@@ -1,17 +1,11 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: spring-boot-app
+  name: spring-boot-deployment
 spec:
-  replicas: 2
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
-  # selector:
-  #   matchLabels: 
-  #     app: spring-boot-app
+  selector:
+    matchLabels: 
+      app: spring-boot-app
   replicas: 1
   template:
     metadata:
