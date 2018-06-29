@@ -1,20 +1,20 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: spring-boot-deployment
+  name: spring-consumer-deployment
 spec:
   selector:
     matchLabels: 
-      app: spring-boot-app
+      app: spring-consumer-app
   replicas: 1
   template:
     metadata:
       labels:
-        app: spring-boot-app
+        app: spring-consumer-app
     spec:
       containers:
-      - image: eskaronea/spring_endpoint:latest
-        name: greeting-endpoint
+      - image: eskaronea/spring_consumer:latest
+        name: greeting-consumer
         ports:
          - containerPort: 8080
 status: {}

@@ -1,0 +1,14 @@
+server.port: 9000
+management.server.port: 9001
+management.server.address: 127.0.0.1
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: kafka:9092
+      bindings:
+        greetings-in:
+          destination: greetings
+          contentType: application/json
+
