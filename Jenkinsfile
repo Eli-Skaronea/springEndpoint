@@ -69,17 +69,17 @@ podTemplate(label: 'mypod', containers:
                 sh "helm init"
 
                 echo 'Linting helm package...'
-                sh "helm lint spring-chart/"
+                sh "helm lint spring-consumer/"
 
                 echo 'Packaging helm chart...'
                 sh """
-                    helm package spring-chart/ --version 1.0-${env.BUILD_NUMBER} -d helm-charts/docs/
-                    helm package spring-chart/ --version 1.0-latest -d helm-charts/docs/
+                    helm package spring-consumer/ --version 1.0-${env.BUILD_NUMBER} -d helm-charts/docs/
+                    helm package spring-consumer/ --version 1.0-latest -d helm-charts/docs/
                     helm repo index helm-charts/docs --url https://eli-skaronea.github.io/helm-charts/
                    """ 
                 archiveArtifacts 'helm-charts/docs/index.yaml'
-                archiveArtifacts "helm-charts/docs/spring-chart-1.0-${env.BUILD_NUMBER}.tgz"
-                archiveArtifacts 'helm-charts/docs/spring-chart-1.0-latest.tgz'
+                archiveArtifacts "helm-charts/docs/spring-consumer-1.0-${env.BUILD_NUMBER}.tgz"
+                archiveArtifacts 'helm-charts/docs/spring-consumer-1.0-latest.tgz'
 
 
             }
