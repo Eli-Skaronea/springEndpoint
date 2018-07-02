@@ -66,14 +66,15 @@ podTemplate(label: 'mypod', containers:
             container('helm')
             {
                 echo 'Initialize helm'
-                sh "helm init"
+                sh "helm init --client-only"
+
+                echo 'Linting helm package...'
+                sh "helm lint spring-consumer/"
 
                 echo 'Releasing helm chart'
-                sh "helm upgrade --install consumer -f helm-charts/spring-app/cvalues.yaml helm-charts/docs/spring-app-0.1.0.tgz"
+                //Default values.yaml is the values for a consumer app.
+                sh "helm upgrade --install consumer helm-charts/docs/spring-app-0.1.0.tgz"
 
-
-                // echo 'Linting helm package...'
-                // sh "helm lint spring-consumer/"
 
                 //echo 'Packaging helm chart...'
                 //sh """
