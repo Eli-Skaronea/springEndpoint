@@ -73,7 +73,7 @@ podTemplate(label: 'mypod', containers:
 
                 echo 'Releasing helm chart'
                 //Default values.yaml is the values for a consumer app.
-                sh "helm upgrade --install consumer -f helm-charts/spring-app/values.yaml helm-charts/docs/spring-app-0.1.0.tgz"
+                sh "helm upgrade --install consumer -f helm-charts/spring-app/values.yaml helm-charts/spring-app"
 
 
                 //echo 'Packaging helm chart...'
