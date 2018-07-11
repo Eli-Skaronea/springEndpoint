@@ -46,6 +46,7 @@ podTemplate(label: 'mypod', containers:
             container('docker')
             {
                 sh "docker build -t eskaronea/spring_endpoint:v1.0.${env.BUILD_NUMBER} ."
+                sh "docker build -t eskaronea/spring_endpoint:latest ."
         
                 echo 'Pushing docker image to docker hub...'
                
@@ -69,7 +70,7 @@ podTemplate(label: 'mypod', containers:
                 sh "helm init --client-only"
 
                 echo 'Linting helm package...'
-                sh "helm lint spring-consumer/"
+                sh "helm lint spring-app/"
 
                 echo 'Releasing helm chart'
                 //Default values.yaml is the values for a consumer app.
