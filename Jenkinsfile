@@ -70,7 +70,7 @@ podTemplate(label: 'mypod', containers:
                 sh "helm init --client-only"
 
                 echo 'Linting helm package...'
-                sh "helm lint spring-app/"
+                sh "helm lint helm-charts/spring-app/"
 
                 echo 'Releasing helm chart'
                 //Default values.yaml is the values for a consumer app.
