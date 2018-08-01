@@ -8,4 +8,4 @@ spec:
     targetPort: http
   selector:
     app: spring-consumer-app
-
+  type: ClusterIP
