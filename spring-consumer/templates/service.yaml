@@ -5,10 +5,9 @@ metadata:
 spec:
   ports:
   - port: 9000
-    targetPort: 9000
+    targetPort: http
   selector:
     app: spring-consumer-app
-  type: LoadBalancer
 status:
   loadBalancer: {}
 ---
